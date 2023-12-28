@@ -10,7 +10,6 @@ void Day1::processFile(const std::string& filePath) {
             globalSum += number;
             // Debug: Show each new addition to the global sum
             std::cout << "Current Number: " << number << " | Global Sum: " << globalSum << std::endl;
-
         }
         file.close();
     }
@@ -26,20 +25,28 @@ int Day1::extractNumbers(const std::string& line) {
     int firstDigit = -1;
     int lastDigit = -1;
 
+    // Iterate from the left side to find the first digit
     for (char c : line) {
         if (isdigit(c)) {
-            // If the first digit is not found yet, set it as the first digit
-            if (firstDigit == -1) {
-                firstDigit = c - '0';
-            }
-            // Update the last digit with the current digit
+            firstDigit = c - '0';
+            break;
+        }
+    }
+
+    // Iterate from the right side to find the last digit
+    for (int i = line.size() - 1; i >= 0; --i) {
+        char c = line[i];
+        if (isdigit(c)) {
             lastDigit = c - '0';
+            break;
         }
     }
 
     // Debug: Show the line, its first and last digits, and the current number
     if (firstDigit != -1 && lastDigit != -1) {
-        std::cout << "Line: " << line << " First Digit: " << firstDigit << " Last Digit: " << lastDigit << " Current Number: " << firstDigit * 10 + lastDigit << std::endl;
+        std::cout << "Line: " << line << " First Digit: " << firstDigit << " Last Digit: " << lastDigit
+            << " Current Number: " << firstDigit * 10 + lastDigit << std::endl;
+
         // Return the current number
         return firstDigit * 10 + lastDigit;
     }
